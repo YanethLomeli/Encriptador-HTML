@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <title>Encriptador</title>
+</head>
+<body>
+
+    <div class="logo">
+        <img src="./media/Logologo2.svg" alt="logo alura">
+    </div>
+    
+    <div class="entrada">
+        <textarea  cols="30" rows="10" autofocus placeholder="Ingrese el texto aqui" id="txt-entrada"></textarea>
+    </div>
+    
+    <div class="salida">
+        <textarea  cols="30" rows="10" id="txt-salida" readonly></textarea>
+        <button id="btn-copy">Copiar</button>
+        <img src="media/Muñeco.png" alt="un muñeco" id="mono">
+        <p id="p1">Ningun mensaje fue encontrado</p>
+        <p id="p2">Ingresa el texto que deseas encriptar o desencriptar.</p>
+    </div>
+    
+    
+    
+    <div class="botones">
+        <div class="leyenda">
+            <p><img src="/media/Vector.svg" alt="sig. de exclamación" >Solo letras minúsculas y sin acentos</p>
+        </div>
+        <button class="encriptador" id="btn-encriptar">Encriptar</button>
+        <button class="desencriptador" id="btn-desencriptar">Desencriptar</button>
+    </div>
+
+</body>
+
+<script>
+    // textbox info
+    let entrada = document.getElementById("txt-entrada");
+    let salida = document.getElementById("txt-salida");
+
+    // función para encriptar el mensaje
+    function encriptar() {
+        if(entrada.value !== "") {
+            // esconder y mostrar elementos de salida
+            document.getElementById("p1").style.display = "none";
+            document.getElementById("p2").style.display = "none";
+            document.getElementById("mono").style.display = "none";
+
+            document.getElementById("btn-copy").style.display = "block";
+            document.getElementById("txt-salida").style.display = "block";
+
+            let msj = ""; 
+            for(const s of entrada.value) {
+                if(s == 'e') {
+                    msj += 'enter';
+                } 
+                else if(s == 'i') {
+                    msj += 'imes';
+                }
+                else if(s == 'a') {
+                    msj += 'ai';
+                }
+                else if(s == 'o') {
+                    msj += 'ober';
+                }
+                else if(s == 'u') {
+                    msj += 'ufat';
+                }
+                else {
+                    msj += s;
+                }
+            }
+            salida.value = msj;
+            // reset textarea
+            entrada.value = "";
+        } else {
+            entrada.focus();
+        }
+    }
+
+    // función para desencriptar el mensaje
+    function desencriptar() {
+        if(entrada.value !== "") {
+            // esconder y mostrar elementos de salida
+            document.getElementById("p1").style.display = "none";
+            document.getElementById("p2").style.display = "none";
+            document.getElementById("mono").style.display = "none";
+
+            document.getElementById("btn-copy").style.display = "block";
+            document.getElementById("txt-salida").style.display = "block";
+
+            let msj = ""; 
+            for (let i = 0; i < entrada.value.length; i++) {
+                if(entrada.value[i] == 'e') {
+                    msj += 'e';
+                    i += 4;
+                } 
+                else if(entrada.value[i] == 'i') {
+                    msj += 'i';
+                    i += 3;
+                }
+                else if(entrada.value[i] == 'a') {
+                    msj += 'a';
+                    i += 1;
+                }
+                else if(entrada.value[i] == 'o') {
+                    msj += 'o';
+                    i += 3;
+                }
+                else if(entrada.value[i] == 'u') {
+                    msj += 'u';
+                    i += 3;
+                }
+                else {
+                    msj += entrada.value[i];
+                }
+            }
+            salida.value = msj;
+            // reset textarea
+            entrada.value = "";
+        } else {
+            entrada.focus();
+        }
+    }
+
+    function copiar() {
+        if(salida.value !== "") {
+            /* Select the text field */
+            salida.select();
+            salida.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(salida.value);
+            salida.value = "";
+            entrada.focus();
+             // esconder y mostrar elementos de salida
+             document.getElementById("p1").style.display = "block";
+            document.getElementById("p2").style.display = "block";
+            document.getElementById("mono").style.display = "block";
+
+            document.getElementById("btn-copy").style.display = "none";
+            document.getElementById("txt-salida").style.display = "none";
+        }
+    }
+
+    let btnEncriptar = document.querySelector("#btn-encriptar");
+    let btnDesencriptar = document.querySelector("#btn-desencriptar");
+    let btnCopy = document.querySelector("#btn-copy");
+
+    btnEncriptar.onclick = encriptar;
+    btnDesencriptar.onclick = desencriptar;
+    btnCopy.onclick = copiar;
+
+    // ocultar elementos
+    document.getElementById("btn-copy").style.display = "none";
+    document.getElementById("txt-salida").style.display = "none";
+</script>
+
+</html>
